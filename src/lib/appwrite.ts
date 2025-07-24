@@ -16,7 +16,7 @@ const getProjectName = () => {
 const client = new Client().setEndpoint(getEndpoint()).setProject(getProjectId())
 
 const account = new Account(client)
-const databases = new Databases(client)
+const databases: Databases = new Databases(client)
 
 const databaseId = '687bbcbe000afa4a5417'
 const todoCollectionId = '687bbccf00012226d30a'
