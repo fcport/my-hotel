@@ -1,4 +1,4 @@
-<template><div>the home</div></template>
+<template><div>the signup</div></template>
 
 <script setup lang="ts"></script>
 
