@@ -3,9 +3,15 @@
     <v-form @submit.prevent @submit="signup">
       <v-text-field type="Email" label="Email" v-model="email" required> </v-text-field>
       <v-text-field type="Password" label="Password" v-model="password" required> </v-text-field>
-      <v-text-field type="Password" label="Confirm Password" v-model="confirmPassword" required>
+      <v-text-field
+        type="Password"
+        label="Confirm Password"
+        :rules="passwordMatchRule"
+        v-model="confirmPassword"
+        required
+      >
       </v-text-field>
-      <v-btn type="submit" :disabled="!formValid">Signup</v-btn></v-form
+      <v-btn type="submit" class="signup-button" :disabled="!formValid">Signup</v-btn></v-form
     >
   </section>
 </template>
@@ -23,13 +29,16 @@ const password = ref('')
 const confirmPassword = ref('')
 
 const formValid = computed(() => {
-  return (
-    password.value === confirmPassword.value && password.value.length > 0 && email.value.length > 0
-  )
+  return passwordsMatch.value && password.value.length > 0 && email.value.length > 0
 })
 const passwordsMatch = computed(() => {
   return password.value === confirmPassword.value
 })
+
+const passwordMatchRule = [
+  (v: string) => !!v || 'Password match is required',
+  (v: string) => password.value === v || 'Passwords are not matching',
+]
 
 async function signup() {
   if (!formValid.value) {
@@ -62,4 +71,8 @@ async function signup() {
 // }
 </script>
 
-<style></style>
+<style lang="scss">
+.signup-button {
+  margin-top: 10px;
+}
+</style>
