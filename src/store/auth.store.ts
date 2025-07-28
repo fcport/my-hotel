@@ -33,6 +33,10 @@ export const useAuthStore = defineStore('auth', () => {
       console.log(error)
     }
   }
+  async function logout() {
+    await account.deleteSession('current')
+    isLoggedIn.value = false
+  }
 
-  return { isLoggedIn, checkLoginStatus, login }
+  return { isLoggedIn, checkLoginStatus, login, logout }
 })

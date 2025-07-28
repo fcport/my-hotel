@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import TheNavbar from './components/TheNavbar.vue'
-import { account } from './lib/appwrite'
+import { useAuthStore } from './store/auth.store'
 import { useSnackbarStore } from './store/snackbar.store'
 
 const snackbarStore = useSnackbarStore()
+const authStore = useAuthStore()
 async function logout() {
-  await account.deleteSession('current')
+  await authStore.logout()
   snackbarStore.queue.push({
     text: 'Bye bye!',
   })
