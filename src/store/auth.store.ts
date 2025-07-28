@@ -22,5 +22,17 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  return { isLoggedIn, checkLoginStatus }
+  async function login(email: string, password: string) {
+    try {
+      const res = await account.createEmailPasswordSession(email, password)
+      console.log(res)
+      if (res) {
+        await checkLoginStatus()
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return { isLoggedIn, checkLoginStatus, login }
 })
