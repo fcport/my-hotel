@@ -20,6 +20,10 @@ const databases: Databases = new Databases(client)
 
 const databaseId = '687bbcbe000afa4a5417'
 const todoCollectionId = '687bbccf00012226d30a'
+const hotelCollectionId = '6888626a002f46365c46'
+const roomCollectionId = '688862df0006fcc0ea55'
+const extraServicesCollectionId = '688862df0006fcc0ea55'
+const barItemsCollectionId = '688862df0006fcc0ea55'
 
 export {
   client,
@@ -30,4 +34,8 @@ export {
   getProjectId,
   databaseId,
   todoCollectionId,
+  hotelCollectionId,
+  roomCollectionId,
+  extraServicesCollectionId,
+  barItemsCollectionId,
 }
