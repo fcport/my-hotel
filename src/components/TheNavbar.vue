@@ -3,7 +3,7 @@
     <RouterLink :to="{ name: 'home' }">Home</RouterLink>
     <RouterLink :to="{ name: 'login' }" v-if="!isLoggedIn">Login</RouterLink>
     <RouterLink :to="{ name: 'signup' }" v-if="!isLoggedIn">Signup</RouterLink>
-    <v-btn @click="emits('logout')" variant="outlined" icon="mdi-logout" v-if="isLoggedIn"></v-btn>
+    <v-icon @click="emits('logout')" icon="mdi-logout" v-if="isLoggedIn"></v-icon>
   </nav>
 </template>
 
