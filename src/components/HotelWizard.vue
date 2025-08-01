@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useHotelStore } from '@/store/hotel.store'
 import { ref } from 'vue'
+import RoomsCreation from './RoomsCreation.vue'
 
 const hotelStore = useHotelStore()
 
+const savedHotel = ref(false)
 const hotelName = ref('')
 const hotelDescription = ref('')
 
@@ -12,6 +14,8 @@ async function saveHotel() {
     name: hotelName.value,
     description: hotelDescription.value,
   })
+
+  savedHotel.value = true
 
   console.log(res)
 }
@@ -34,7 +38,7 @@ async function saveHotel() {
       </template>
 
       <template v-slot:[`item.2`]>
-        <v-card title="Rooms informations" flat>...</v-card>
+        <v-card title="Rooms informations" flat><RoomsCreation /> </v-card>
       </template>
 
       <template v-slot:[`item.3`]>

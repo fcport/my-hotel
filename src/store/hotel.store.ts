@@ -13,6 +13,7 @@ export const useHotelStore = defineStore('hotel', () => {
       debugger
       const res = await createHotel(hotel)
       console.log(res)
+      await getHotels()
     } catch (error) {
       console.log(error)
       snackbarStore.addMessage({ color: 'error', text: `There was an error: ${error}` })
