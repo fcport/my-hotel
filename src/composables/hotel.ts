@@ -7,5 +7,21 @@ export async function createHotel(hotel: Partial<Hotel>) {
 
   console.log(res)
 
-  return res
+  return { ...res, id: res.$id }
+}
+
+export async function getAllHotels() {
+  const res = (await databases.listDocuments(databaseId, hotelCollectionId, [])).documents
+  console.log(res)
+
+  return res.map((hotelFromDb) => ({
+    ...hotelFromDb,
+    id: hotelFromDb.$id,
+    name: hotelFromDb.name,
+    description: hotelFromDb.description || '',
+    rooms: hotelFromDb.rooms || [],
+    address: hotelFromDb.address || '',
+    extraServices: hotelFromDb.extraServices || [],
+    barItems: hotelFromDb.barItems || [],
+  }))
 }
