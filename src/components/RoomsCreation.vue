@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="rooms_creation_container">
+    <h1>Creating rooms for: {{ hotelStore.selectedHotel?.name || 'unknown' }}</h1>
     <v-form @submit.prevent @submit="saveRooms()">
       <div class="room-form" v-for="(room, index) in rooms" :key="room.id">
         <v-text-field type="text" label="Room number/name" v-model="rooms[index].name" required>
@@ -35,6 +36,11 @@ function addEmptyRoom() {
 </script>
 
 <style lang="scss">
+.rooms_creation_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .room-form {
   display: flex;
   flex-direction: row;

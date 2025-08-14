@@ -1,5 +1,6 @@
-import { databaseId, databases, hotelCollectionId } from '@/lib/appwrite'
+import { databaseId, databases, hotelCollectionId, roomCollectionId } from '@/lib/appwrite'
 import type { Hotel } from '@/models/hotel.model'
+import type { Room } from '@/models/room.model'
 import { ID } from 'appwrite'
 
 export async function createHotel(hotel: Partial<Hotel>) {
@@ -24,4 +25,20 @@ export async function getAllHotels() {
     extraServices: hotelFromDb.extraServices || [],
     barItems: hotelFromDb.barItems || [],
   }))
+}
+
+export async function saveHotelRooms(hotelId: string, rooms: Room[]) {
+  const roomsToSave = [...rooms.map((room) => ({ ...room, hotel: { id: hotelId } }))]
+  const res = [] as Room[]
+  roomsToSave.forEach(async (room) => {
+    const resultSingleRoom = await databases.createDocument(
+      databaseId,
+      roomCollectionId,
+      ID.unique(),
+      room,
+    )
+    res.push(resultSingleRoom as unknown as Room)
+  })
+
+  return res
 }

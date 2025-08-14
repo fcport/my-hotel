@@ -8,12 +8,16 @@ import { useSnackbarStore } from './snackbar.store'
 export const useHotelStore = defineStore('hotel', () => {
   const hotels = ref([] as Hotel[])
   const snackbarStore = useSnackbarStore()
+  const selectedHotel = ref<Hotel | null>(null)
   async function saveNewHotel(hotel: Partial<Hotel>) {
     try {
       debugger
       const res = await createHotel(hotel)
       console.log(res)
       await getHotels()
+      if (!!hotels.value.find((hotel) => hotel.id === res.$id)) {
+        selectedHotel.value = hotels.value.find((hotel) => hotel.id === res.$id) as Hotel
+      }
     } catch (error) {
       console.log(error)
       snackbarStore.addMessage({ color: 'error', text: `There was an error: ${error}` })
@@ -31,5 +35,23 @@ export const useHotelStore = defineStore('hotel', () => {
     }
   }
 
-  return { hotels, saveNewHotel, getHotels }
+  function selectHotel(hotelId: string) {
+    if (hotels.value.findIndex((hotel) => hotel.id === hotelId)) {
+      selectedHotel.value = hotels.value.find((hotel) => hotel.id === hotelId)!
+    }
+  }
+
+  async function getRoomsForHotel(hotelId: string) {}
+
+  async function saveRoomsForHotel(hotelId: string) {}
+
+  return {
+    hotels,
+    saveNewHotel,
+    getHotels,
+    selectedHotel,
+    selectHotel,
+    getRoomsForHotel,
+    saveRoomsForHotel,
+  }
 })
