@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <v-form @submit.prevent @submit="saveRooms()">
+  <div class="rooms_creation_container">
+    <h1>Creating rooms for: {{ hotelStore.selectedHotel?.name || 'unknown' }}</h1>
+    <v-form @submit.prevent @submit="saveRooms">
       <div class="room-form" v-for="(room, index) in rooms" :key="room.id">
         <v-text-field type="text" label="Room number/name" v-model="rooms[index].name" required>
         </v-text-field>
@@ -23,11 +24,16 @@
 import type { Room } from '@/models/room.model'
 import { useHotelStore } from '@/store/hotel.store'
 import { ID } from 'appwrite'
+import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 const rooms = ref([] as Room[])
 
 const hotelStore = useHotelStore()
-async function saveRooms() {}
+const { selectedHotel } = storeToRefs(hotelStore)
+
+async function saveRooms() {
+  if (selectedHotel.value?.id) hotelStore.saveRoomsForHotel(selectedHotel.value?.id, rooms.value)
+}
 
 function addEmptyRoom() {
   rooms.value.push({ allocation: 0, id: ID.unique(), hotel: hotelStore.hotels[0], name: '' })
@@ -35,6 +41,11 @@ function addEmptyRoom() {
 </script>
 
 <style lang="scss">
+.rooms_creation_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .room-form {
   display: flex;
   flex-direction: row;
